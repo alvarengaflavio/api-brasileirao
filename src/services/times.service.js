@@ -1,10 +1,12 @@
 const tabela = require('../mocks/times');
 const times = tabela.times;
 
-const findAllTimesService = () => {};
+const findAllTimesService = () => {
+  return times;
+};
 
 const findByIdTimeService = (id) => {
-  return times.find((time) => time.id === id);
+  return times.find((time) => time.time.time_id === id);
 };
 
 const createTimeService = (newPaleta) => {};

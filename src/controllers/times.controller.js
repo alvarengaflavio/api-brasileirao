@@ -36,7 +36,27 @@ const findByPositionTimeController = (req, res) => {
   res.send(chosenTime);
 };
 
-const createTimeController = (req, res) => {};
+const createTimeController = (req, res) => {
+  const time = req.body;
+   if (
+    !time ||
+    !time.time ||
+    !time.time.nome_popular ||
+    !time.time.sigla ||
+    !time.time.escudo ||
+    !time.vitorias ||
+    !time.empates ||
+    !time.derrotas ||
+    !time.gols_pro ||
+    !time.gols_contra
+  )
+    return res.status(400).send({
+      message: "You didin't fill all the required data fields",
+    });
+
+  const newTime = timesService.createTimeService(time);
+  res.send(newTime);
+};
 
 const updateTimeController = (req, res) => {};
 

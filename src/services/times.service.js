@@ -1,5 +1,4 @@
-const tabela = require('../mocks/times');
-const times = tabela.times;
+const times = require('../mocks/times');
 
 const findAllTimesService = () => {
   return times;

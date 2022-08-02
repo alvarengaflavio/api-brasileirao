@@ -6,8 +6,17 @@ const findAllTimesControler = (req, res) => {
 };
 
 const findByIdTimeController = (req, res) => {
-  const idParam = req.params.id;
+  const idParam = Number(req.params.id);
+
+  if (!idParam)
+    return res
+      .status(400)
+      .send({ message: 'An ID is required for this request.' });
+
   const chosenTime = timesService.findByIdTimeService(idParam);
+
+  if (!chosenTime) return res.status(400).send({ message: 'ID not found.' });
+
   res.send(chosenTime);
 };
 

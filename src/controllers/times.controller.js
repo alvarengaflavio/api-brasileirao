@@ -20,20 +20,10 @@ const findByIdTimeController = (req, res) => {
   res.send(chosenTime);
 };
 
-const findByPositionTimeController = (req, res) => {
-  const posParam = Number(req.params.pos);
+const findAllTimesByPositionController = (req, res) => {
+  const findTimePositionsService = timesService.findAllTimesByPositionService();
 
-  if (!posParam)
-    return res
-      .status(400)
-      .send({ message: 'A POSITION is required for this request.' });
-
-  const chosenTime = timesService.findByPositionTimeService(posParam);
-
-  if (!chosenTime)
-    return res.status(400).send({ message: 'POSITION not found.' });
-
-  res.send(chosenTime);
+  res.send(findTimePositionsService);
 };
 
 const createTimeController = (req, res) => {
@@ -103,7 +93,7 @@ const deleteTimeController = (req, res) => {
 module.exports = {
   findAllTimesControler,
   findByIdTimeController,
-  findByPositionTimeController,
+  findAllTimesByPositionController,
   createTimeController,
   updateTimeController,
   deleteTimeController,

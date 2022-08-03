@@ -3,7 +3,7 @@ const tabela = [
     posicao: 1,
     pontos: 42,
     time: {
-      time_id: 56,
+      time_id: 17,
       nome_popular: 'Palmeiras',
       sigla: 'PAL',
       escudo:
@@ -24,7 +24,7 @@ const tabela = [
     posicao: 2,
     pontos: 38,
     time: {
-      time_id: 65,
+      time_id: 8,
       nome_popular: 'Corinthians',
       sigla: 'COR',
       escudo:
@@ -45,7 +45,7 @@ const tabela = [
     posicao: 3,
     pontos: 35,
     time: {
-      time_id: 26,
+      time_id: 12,
       nome_popular: 'Fluminense',
       sigla: 'FLU',
       escudo:
@@ -66,7 +66,7 @@ const tabela = [
     posicao: 4,
     pontos: 34,
     time: {
-      time_id: 185,
+      time_id: 2,
       nome_popular: 'Athletico-PR',
       sigla: 'CAP',
       escudo:
@@ -87,7 +87,7 @@ const tabela = [
     posicao: 5,
     pontos: 33,
     time: {
-      time_id: 18,
+      time_id: 11,
       nome_popular: 'Flamengo',
       sigla: 'FLA',
       escudo:
@@ -108,7 +108,7 @@ const tabela = [
     posicao: 6,
     pontos: 33,
     time: {
-      time_id: 44,
+      time_id: 15,
       nome_popular: 'Internacional',
       sigla: 'INT',
       escudo:
@@ -129,7 +129,7 @@ const tabela = [
     posicao: 7,
     pontos: 32,
     time: {
-      time_id: 30,
+      time_id: 4,
       nome_popular: 'Atlético-MG',
       sigla: 'CAM',
       escudo:
@@ -150,7 +150,7 @@ const tabela = [
     posicao: 8,
     pontos: 30,
     time: {
-      time_id: 64,
+      time_id: 18,
       nome_popular: 'Bragantino',
       sigla: 'BGT',
       escudo:
@@ -171,7 +171,7 @@ const tabela = [
     posicao: 9,
     pontos: 27,
     time: {
-      time_id: 63,
+      time_id: 19,
       nome_popular: 'Santos',
       sigla: 'SAN',
       escudo:
@@ -192,7 +192,7 @@ const tabela = [
     posicao: 10,
     pontos: 26,
     time: {
-      time_id: 57,
+      time_id: 20,
       nome_popular: 'São Paulo',
       sigla: 'SAO',
       escudo:
@@ -213,7 +213,7 @@ const tabela = [
     posicao: 11,
     pontos: 25,
     time: {
-      time_id: 115,
+      time_id: 14,
       nome_popular: 'Goiás',
       sigla: 'GOI',
       escudo:
@@ -234,7 +234,7 @@ const tabela = [
     posicao: 12,
     pontos: 24,
     time: {
-      time_id: 22,
+      time_id: 6,
       nome_popular: 'Botafogo',
       sigla: 'BOT',
       escudo:
@@ -255,7 +255,7 @@ const tabela = [
     posicao: 13,
     pontos: 24,
     time: {
-      time_id: 33,
+      time_id: 1,
       nome_popular: 'América-MG',
       sigla: 'AMG',
       escudo:
@@ -276,7 +276,7 @@ const tabela = [
     posicao: 14,
     pontos: 24,
     time: {
-      time_id: 105,
+      time_id: 7,
       nome_popular: 'Ceará',
       sigla: 'CEA',
       escudo:
@@ -297,7 +297,7 @@ const tabela = [
     posicao: 15,
     pontos: 22,
     time: {
-      time_id: 84,
+      time_id: 9,
       nome_popular: 'Coritiba',
       sigla: 'CFC',
       escudo:
@@ -318,7 +318,7 @@ const tabela = [
     posicao: 16,
     pontos: 21,
     time: {
-      time_id: 6,
+      time_id: 5,
       nome_popular: 'Avaí',
       sigla: 'AVA',
       escudo:
@@ -339,7 +339,7 @@ const tabela = [
     posicao: 17,
     pontos: 20,
     time: {
-      time_id: 204,
+      time_id: 10,
       nome_popular: 'Cuiabá',
       sigla: 'CUI',
       escudo:
@@ -360,7 +360,7 @@ const tabela = [
     posicao: 18,
     pontos: 18,
     time: {
-      time_id: 131,
+      time_id: 13,
       nome_popular: 'Fortaleza',
       sigla: 'FOR',
       escudo:
@@ -381,7 +381,7 @@ const tabela = [
     posicao: 19,
     pontos: 17,
     time: {
-      time_id: 98,
+      time_id: 3,
       nome_popular: 'Atlético-GO',
       sigla: 'ACG',
       escudo:
@@ -402,7 +402,7 @@ const tabela = [
     posicao: 20,
     pontos: 16,
     time: {
-      time_id: 43,
+      time_id: 16,
       nome_popular: 'Juventude',
       sigla: 'JUV',
       escudo:

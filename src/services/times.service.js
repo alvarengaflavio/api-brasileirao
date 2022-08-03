@@ -13,7 +13,7 @@ const findByPositionTimeService = (position) => {
 };
 
 const createTimeService = (newTime) => {
-  const newId = times.length + 1;
+  const newId = findFreeId();
 
   newTime.time.time_id = newId;
   newTime.saldo_gols = newTime.gols_pro - newTime.gols_contra;
@@ -44,6 +44,22 @@ const updatePositionsValues = () => {
 
 const timesSortedByPoints = () => {
   times.sort((a, b) => b.pontos - a.pontos);
+};
+
+const findFreeId = () => {
+  const sortedById = times
+    .slice()
+    .sort((a, b) => a.time.time_id - b.time.time_id);
+  let previousId = 0;
+
+  for (const time of sortedById) {
+    if (time.time.time_id !== previousId + 1) {
+      return previousId + 1;
+    }
+    previousId = time.time.time_id;
+  }
+
+  return previousId + 1;
 };
 
 // EXPORTS

@@ -37,7 +37,12 @@ const updateTimeService = (id, timeEdited) => {
   return times.find((time) => time.time.time_id === id);
 };
 
-const deleteTimeService = (id) => {};
+const deleteTimeService = (id) => {
+  const timeIndex = times.findIndex((team) => team.time.time_id === id);
+  const deletedTeam = times.splice(timeIndex, 1);
+  updateTimesPositions();
+  return deletedTeam;
+};
 // END OF SERVICES
 
 // FUNCTIONS for manipulation of data structures

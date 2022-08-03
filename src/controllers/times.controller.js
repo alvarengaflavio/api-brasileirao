@@ -88,7 +88,17 @@ const updateTimeController = (req, res) => {
   res.send(updatedTime);
 };
 
-const deleteTimeController = (req, res) => {};
+const deleteTimeController = (req, res) => {
+  const idParam = Number(req.params.id);
+
+  if (!idParam)
+    return res
+      .status(400)
+      .send({ message: 'An ID is required for this request.' });
+
+  const deletedTime = timesService.deleteTimeService(idParam);
+  res.send(deletedTime);
+};
 
 module.exports = {
   findAllTimesControler,

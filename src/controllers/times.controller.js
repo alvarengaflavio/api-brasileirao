@@ -38,7 +38,7 @@ const findByPositionTimeController = (req, res) => {
 
 const createTimeController = (req, res) => {
   const time = req.body;
-   if (
+  if (
     !time ||
     !time.time ||
     !time.time.nome_popular ||
@@ -58,7 +58,35 @@ const createTimeController = (req, res) => {
   res.send(newTime);
 };
 
-const updateTimeController = (req, res) => {};
+const updateTimeController = (req, res) => {
+  const editedId = Number(req.params.id);
+
+  if (!editedId)
+    return res
+      .status(400)
+      .send({ message: 'An ID is required for this request.' });
+
+  const editedTime = req.body;
+
+  if (
+    !editedTime ||
+    !editedTime.time ||
+    !editedTime.time.nome_popular ||
+    !editedTime.time.sigla ||
+    !editedTime.time.escudo ||
+    !editedTime.vitorias ||
+    !editedTime.empates ||
+    !editedTime.derrotas ||
+    !editedTime.gols_pro ||
+    !editedTime.gols_contra
+  )
+    return res.status(400).send({
+      message: "You didin't fill all the required data fields",
+    });
+
+  const updatedTime = timesService.updateTimeService(editedId, editedTime);
+  res.send(updatedTime);
+};
 
 const deleteTimeController = (req, res) => {};
 

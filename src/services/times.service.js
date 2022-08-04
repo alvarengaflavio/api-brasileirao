@@ -1,18 +1,23 @@
 const TeamEntity = require('../entities/team.entity');
 const times = require('../mocks/times');
 
+/*   SERVICES   */
+/*   GET_ALL    */
 const findAllTimesService = () => {
   return times;
 };
 
+/*   GET_BY_ID   */
 const findByIdTimeService = (id) => {
   return times.find((time) => time.time.time_id === id);
 };
 
+/*   GET_TABELA   */
 const findAllTimesByPositionService = () => {
   return TeamEntity.teamsSortedByPoints(times);
 };
 
+/*   POST_TIME   */
 const createTimeService = (newTime) => {
   try {
     newTime.id = TeamEntity.findFreeId(times);
@@ -27,6 +32,7 @@ const createTimeService = (newTime) => {
   }
 };
 
+/*   UPDATE_BY_ID   */
 const updateTimeService = (timeEdited) => {
   try {
     const timeIndex = times.findIndex(
@@ -46,6 +52,7 @@ const updateTimeService = (timeEdited) => {
   }
 };
 
+/*   DELETE_BY_ID   */
 const deleteTimeService = (id) => {
   try {
     const timeIndex = times.findIndex((team) => team.time.time_id === id);
@@ -60,7 +67,8 @@ const deleteTimeService = (id) => {
     return err.message;
   }
 };
-// END OF SERVICES
+
+/*   END OF SERVICES   */
 
 // EXPORTS
 module.exports = {

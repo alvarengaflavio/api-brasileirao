@@ -1,7 +1,6 @@
 class TeamEntity {
   constructor(team) {
     this.id = team.time.time_id;
-    console.log(this.id);
     this.nome = team.time.nome_popular;
     this.sigla = team.time.sigla;
     this.escudo = team.time.escudo;

@@ -1,10 +1,13 @@
 const timesService = require('../services/times.service');
 
+/* CONTROLLERS */
+/*   GET_ALL   */
 const findAllTimesControler = (req, res) => {
   const allTimes = timesService.findAllTimesService();
   res.send(allTimes);
 };
 
+/*   GET_BY_ID   */
 const findByIdTimeController = (req, res) => {
   const idParam = Number(req.params.id);
 
@@ -20,12 +23,14 @@ const findByIdTimeController = (req, res) => {
   res.send(chosenTime);
 };
 
+/*   GET_TABELA   */
 const findAllTimesByPositionController = (req, res) => {
   const findTimePositionsService = timesService.findAllTimesByPositionService();
 
   res.send(findTimePositionsService);
 };
 
+/*   POST_TIME   */
 const createTimeController = (req, res) => {
   try {
     const time = new timesService.TeamEntity(req.body);
@@ -39,6 +44,7 @@ const createTimeController = (req, res) => {
   }
 };
 
+/*   UPDATE_BY_ID   */
 const updateTimeController = (req, res) => {
   try {
     const editedTime = req.body;
@@ -58,6 +64,7 @@ const updateTimeController = (req, res) => {
   }
 };
 
+/*   DELETE_BY_ID   */
 const deleteTimeController = (req, res) => {
   try {
     const idParam = Number(req.params.id);
@@ -73,7 +80,8 @@ const deleteTimeController = (req, res) => {
     });
   }
 };
-// END OF CONTROLLERS
+
+/*   END OF CONTROLLERS   */
 
 module.exports = {
   findAllTimesControler,

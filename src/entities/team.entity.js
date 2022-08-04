@@ -1,48 +1,56 @@
 class TeamEntity {
   constructor(team) {
     this.id = team.time.time_id;
+    console.log(this.id);
     this.nome = team.time.nome_popular;
     this.sigla = team.time.sigla;
     this.escudo = team.time.escudo;
-    this.gols_pro = team.gols_pro;
-    this.gols_contra = team.gols_contra;
-    this.vitorias = team.vitorias;
-    this.empates = team.empates;
-    this.derrotas = team.derrotas;
-    this.posicao = null;
+    this.gols_pro = +team.gols_pro;
+    this.gols_contra = +team.gols_contra;
+    this.vitorias = +team.vitorias;
+    this.empates = +team.empates;
+    this.derrotas = +team.derrotas;
+    this._posicao = null;
   }
 
-  validate() {
-    if (!this.id) {
-      throw new Error('Id inválida');
+  validateTeam() {
+    // if (!this.id) {
+    //   throw new Error('Id inválida');
+    // }
+    if (!this.nome || this.nome.length >= 12) {
+      throw new Error('Nome de Time inválido.');
     }
-    if (!this.nome) {
-      throw new Error('Nome de time inválido');
-    }
-    if (!this.sigla) {
-      throw new Error('Sigla inválida');
+    if (!this.sigla || this.sigla.length !== 3) {
+      throw new Error('Sigla inválida! A sigal deve conter três caracteres.');
     }
     if (!this.escudo) {
-      throw new Error('Escudo inválido');
+      throw new Error('Escudo inválido.');
     }
     if (isNaN(this.gols_pro)) {
-      throw new Error('Número de Gols Pro inválido');
+      throw new Error('Número de Gols Pro inválido.');
     }
     if (isNaN(this.gols_contra)) {
-      throw new Error('Número de Gols Contra inválido');
+      throw new Error('Número de Gols Contra inválido.');
     }
     if (isNaN(this.vitorias)) {
-      throw new Error('Número de vitórias inválido');
+      throw new Error('Número de vitórias inválido.');
     }
     if (isNaN(this.empates)) {
-      throw new Error('Número de empates inválido');
+      throw new Error('Número de empates inválido.');
     }
     if (isNaN(this.derrotas)) {
-      throw new Error('Número de derrotas inválido');
+      throw new Error('Número de derrotas inválido.');
     }
   }
 
-  updateTeam() {
+  /**
+   * @param {Number} pos
+   */
+  set posicao(pos) {
+    this._posicao = pos;
+  }
+
+  updateTeamStats() {
     this.saldo_gols = this.gols_pro - this.gols_contra;
     this.pontos = this.vitorias * 3 + this.empates;
     this.jogos = this.vitorias + this.empates + this.derrotas;
@@ -55,7 +63,7 @@ class TeamEntity {
 
   getTeam() {
     return {
-      posicao: this.posicao,
+      posicao: this._posicao,
       pontos: this.pontos,
       time: {
         time_id: this.id,
@@ -90,10 +98,12 @@ class TeamEntity {
     return teams.slice().sort((a, b) => b.pontos - a.pontos);
   }
 
+  static teamsSortedById(teams) {
+    return teams.slice().sort((a, b) => a.time.time_id - b.time.time_id);
+  }
+
   static findFreeId(teams) {
-    const sortedById = teams
-      .slice()
-      .sort((a, b) => a.time.time_id - b.time.time_id);
+    const sortedById = this.teamsSortedById(teams);
     let previousId = 0;
 
     for (const team of sortedById) {
@@ -103,6 +113,7 @@ class TeamEntity {
       previousId = team.time.time_id;
     }
 
+    // console.log(previousId + 1);
     return previousId + 1;
   }
 }

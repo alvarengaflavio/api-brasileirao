@@ -22,22 +22,26 @@ class TeamEntity {
     if (!this.sigla || this.sigla.length !== 3) {
       throw new Error('Sigla inválida! A sigal deve conter três caracteres.');
     }
-    if (!this.escudo) {
+    if (!this.escudo || this.sigla.length > 50) {
       throw new Error('Escudo inválido.');
     }
-    if (isNaN(this.gols_pro)) {
+    if (isNaN(this.gols_pro) && this.gols_pro > 255 && this.gols_pro < 0) {
       throw new Error('Número de Gols Pro inválido.');
     }
-    if (isNaN(this.gols_contra)) {
+    if (
+      isNaN(this.gols_contra) &&
+      this.gols_contra > 255 &&
+      this.gols_contra < 0
+    ) {
       throw new Error('Número de Gols Contra inválido.');
     }
-    if (isNaN(this.vitorias)) {
+    if (isNaN(this.vitorias) && this.vitorias > 255 && this.vitorias < 0) {
       throw new Error('Número de vitórias inválido.');
     }
-    if (isNaN(this.empates)) {
+    if (isNaN(this.empates) && this.empates > 255 && this.empates < 0) {
       throw new Error('Número de empates inválido.');
     }
-    if (isNaN(this.derrotas)) {
+    if (isNaN(this.derrotas) && this.derrotas > 255 && this.derrotas < 0) {
       throw new Error('Número de derrotas inválido.');
     }
   }

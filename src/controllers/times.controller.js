@@ -1,4 +1,5 @@
 const timesService = require('../services/times.service');
+const ObjEntity = require('../entities/obj.entity');
 
 /* CONTROLLERS */
 /*   GET_ALL   */
@@ -11,7 +12,7 @@ const findAllTimesControler = (req, res) => {
 const findByIdTimeController = (req, res) => {
   try {
     const idParam = Number(req.params.id);
-    if (!idParam) throw new Error('ID invalid.');
+    ObjEntity.validadeId(idParam);
 
     const chosenTime = timesService.findByIdTimeService(idParam);
     if (!chosenTime) throw new Error('Team not found.');
@@ -36,12 +37,11 @@ const findAllTimesByPositionController = (req, res) => {
 /*   POST_TIME   */
 const createTimeController = (req, res) => {
   try {
-    if (Object.keys(req.body).length === 0) {
-      throw new Error('Team Req Empty.');
-    }
+    ObjEntity.validadeObject(req.body);
     const time = new timesService.TeamEntity(req.body);
     time.validateTeam();
     const newTime = timesService.createTimeService(time);
+
     res.send(newTime);
   } catch (err) {
     return res.status(400).send({
@@ -55,8 +55,8 @@ const updateTimeController = (req, res) => {
   try {
     const editedTime = req.body;
     const editedId = Number(req.params.id);
-    if (!editedId || isNaN(editedId))
-      throw new Error('An ID is required for this request.');
+    ObjEntity.validadeObject(editedTime);
+    ObjEntity.validadeId(editedId);
     editedTime.time.time_id = editedId;
     const editedEntity = new timesService.TeamEntity(editedTime);
     editedEntity.validateTeam();
@@ -74,7 +74,7 @@ const updateTimeController = (req, res) => {
 const deleteTimeController = (req, res) => {
   try {
     const idParam = Number(req.params.id);
-    if (!idParam || isNaN(idParam)) throw new Error('ID required.');
+    ObjEntity.validadeId(idParam);
 
     const deletedTime = timesService.deleteTimeService(idParam);
 

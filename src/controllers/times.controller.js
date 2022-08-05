@@ -9,30 +9,36 @@ const findAllTimesControler = (req, res) => {
 
 /*   GET_BY_ID   */
 const findByIdTimeController = (req, res) => {
-  const idParam = Number(req.params.id);
+  try {
+    const idParam = Number(req.params.id);
+    if (!idParam) throw new Error('ID invalid.');
 
-  if (!idParam)
-    return res
-      .status(400)
-      .send({ message: 'An ID is required for this request.' });
+    const chosenTime = timesService.findByIdTimeService(idParam);
+    if (!chosenTime) throw new Error('Team not found.');
 
-  const chosenTime = timesService.findByIdTimeService(idParam);
-
-  if (!chosenTime) return res.status(400).send({ message: 'ID not found.' });
-
-  res.send(chosenTime);
+    res.send(chosenTime);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 };
 
 /*   GET_TABELA   */
 const findAllTimesByPositionController = (req, res) => {
-  const findTimePositionsService = timesService.findAllTimesByPositionService();
+  try {
+    const timesSortedByPosition = timesService.findAllTimesByPositionService();
 
-  res.send(findTimePositionsService);
+    res.send(timesSortedByPosition);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 };
 
 /*   POST_TIME   */
 const createTimeController = (req, res) => {
   try {
+    if (Object.keys(req.body).length === 0) {
+      throw new Error('Team Req Empty.');
+    }
     const time = new timesService.TeamEntity(req.body);
     time.validateTeam();
     const newTime = timesService.createTimeService(time);
@@ -68,8 +74,7 @@ const updateTimeController = (req, res) => {
 const deleteTimeController = (req, res) => {
   try {
     const idParam = Number(req.params.id);
-    if (!idParam || isNaN(idParam))
-      throw new Error('An ID is required for this request.');
+    if (!idParam || isNaN(idParam)) throw new Error('ID required.');
 
     const deletedTime = timesService.deleteTimeService(idParam);
 

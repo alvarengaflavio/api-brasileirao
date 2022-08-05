@@ -21,7 +21,7 @@ Back-end CRUD memória (Read All e Read By Id)
 #### GET_TABELA `GET`: `http://localhost:3000/brasileirao/find_tabela`
 
 #### CREATE `POST`: `http://localhost:3000/brasileirao/create`
-`Json` para `POST`
+Exemplo `Json` para `POST`
 ```json
 {
     "time": {
@@ -38,7 +38,7 @@ Back-end CRUD memória (Read All e Read By Id)
 ```
 
 #### PUT `PUT`: `http://localhost:3000/brasileirao/update/{id}`
-`Json` para `PUT`
+Exemplo `Json` para `PUT`
 ```json
 {
     "time": {

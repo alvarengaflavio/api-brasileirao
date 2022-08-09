@@ -4,15 +4,15 @@ const TeamSchema = new mongoose.Schema({
   posicao: { type: Number, required: false, default: null },
   pontos: { type: Number, required: false },
   time: {
-    nome_popular: { String, required: true, minLength: 4, maxLength: 15 },
+    nome_popular: { type: String, required: true, minLength: 4, maxLength: 15 },
     sigla: {
-      String,
+      type: String,
       required: true,
       minLength: 3,
       maxLength: 3,
       uppercase: true,
     },
-    escudo: { String, required: true },
+    escudo: { type: String, required: true },
   },
   jogos: { type: Number, required: false },
   vitorias: { type: Number, required: true },
@@ -28,4 +28,4 @@ const TeamSchema = new mongoose.Schema({
 
 const Team = mongoose.model('teams', TeamSchema);
 
-modeula.exports = Team;
+module.exports = Team;

@@ -28,10 +28,9 @@ const findByIdTimeController = async (req, res) => {
 };
 
 /*   GET_TABELA   */
-const findAllTimesByPositionController = (req, res) => {
+const findAllTimesByPositionController = async (req, res) => {
   try {
-    const timesSortedByPosition = timesService.findAllTimesByPositionService();
-
+    const timesSortedByPosition = await timesService.findAllTimesByPositionService();
     res.send(timesSortedByPosition);
   } catch (err) {
     return res.status(400).send(err.message);

@@ -17,8 +17,10 @@ const findByIdTimeService = async (id) => {
 };
 
 /*   GET_TABELA   */
-const findAllTimesByPositionService = () => {
-  return TeamEntity.teamsSortedByPoints(times);
+const findAllTimesByPositionService = async () => {
+  const allTeams = await Team.find();
+  const allTeamsTable = TeamEntity.teamsSortedByPoints(allTeams);
+  return allTeamsTable;
 };
 
 /*   POST_TIME   */

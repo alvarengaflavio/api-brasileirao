@@ -1,20 +1,24 @@
 const timesService = require('../services/times.service');
 const ObjEntity = require('../entities/obj.entity');
+const mongoose = require('mongoose');
 
 /* CONTROLLERS */
 /*   GET_ALL   */
-const findAllTimesControler = (req, res) => {
-  const allTimes = timesService.findAllTimesService();
+const findAllTimesControler = async (req, res) => {
+  const allTimes = await timesService.findAllTimesService();
   res.send(allTimes);
 };
 
 /*   GET_BY_ID   */
-const findByIdTimeController = (req, res) => {
+const findByIdTimeController = async (req, res) => {
   try {
-    const idParam = Number(req.params.id);
-    ObjEntity.validadeId(idParam);
+    const idParam = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(idParam)) {
+      throw new Error('Invalid ID!');
+    }
+    // ObjEntity.validadeId(idParam);
 
-    const chosenTime = timesService.findByIdTimeService(idParam);
+    const chosenTime = await timesService.findByIdTimeService(idParam);
     if (!chosenTime) throw new Error('Team not found.');
 
     res.send(chosenTime);

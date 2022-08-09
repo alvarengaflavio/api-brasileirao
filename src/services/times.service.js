@@ -1,15 +1,19 @@
 const TeamEntity = require('../entities/team.entity');
-const times = require('../mocks/times');
+// const times = require('../mocks/times');
+const Team = require('../models/team.model');
 
 /*   SERVICES   */
 /*   GET_ALL    */
-const findAllTimesService = () => {
-  return times;
+const findAllTimesService = async () => {
+  // return times;
+  const allTeams = await Team.find();
+  return allTeams;
 };
 
 /*   GET_BY_ID   */
-const findByIdTimeService = (id) => {
-  return times.find((time) => time.time.time_id === id);
+const findByIdTimeService = async (id) => {
+  const byIdTeam = await Team.findById(id);
+  return byIdTeam;
 };
 
 /*   GET_TABELA   */

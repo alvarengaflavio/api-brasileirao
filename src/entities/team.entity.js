@@ -1,6 +1,6 @@
 class TeamEntity {
   constructor(team) {
-    this.id = team.time.time_id;
+    this.id = team._id;
     this.nome = team.time.nome_popular;
     this.sigla = team.time.sigla;
     this.escudo = team.time.escudo;
@@ -66,10 +66,10 @@ class TeamEntity {
 
   getTeam() {
     return {
+      _id: this.id,
       posicao: this._posicao,
       pontos: this.pontos,
       time: {
-        time_id: this.id,
         nome_popular: this.nome,
         sigla: this.sigla,
         escudo: this.escudo,

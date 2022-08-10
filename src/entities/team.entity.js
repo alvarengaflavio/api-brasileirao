@@ -9,7 +9,7 @@ class TeamEntity {
     this.vitorias = +team.vitorias;
     this.empates = +team.empates;
     this.derrotas = +team.derrotas;
-    this._posicao = null;
+    this._posicao = undefined;
   }
 
   validateTeam() {
@@ -117,7 +117,6 @@ class TeamEntity {
       previousId = team.time.time_id;
     }
 
-    // console.log(previousId + 1);
     return previousId + 1;
   }
 }

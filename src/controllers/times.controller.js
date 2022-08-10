@@ -5,8 +5,12 @@ const mongoose = require('mongoose');
 /* CONTROLLERS */
 /*   GET_ALL   */
 const findAllTimesControler = async (req, res) => {
-  const allTimes = await timesService.findAllTimesService();
-  res.send(allTimes);
+  try {
+    const allTimes = await timesService.findAllTimesService();
+    res.send(allTimes);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
 /*   GET_BY_ID   */
@@ -16,13 +20,11 @@ const findByIdTimeController = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(idParam)) {
       throw new Error('Invalid ID!');
     }
-
     const chosenTime = await timesService.findByIdTimeService(idParam);
-    if (!chosenTime) throw new Error('Team not found.');
-
+    if (!chosenTime) throw new Error('Team not found!');
     res.send(chosenTime);
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({ message: err.message });
   }
 };
 
@@ -33,7 +35,7 @@ const findAllTimesByPositionController = async (req, res) => {
       await timesService.findAllTimesByPositionService();
     res.send(timesSortedByPosition);
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({ message: err.message });
   }
 };
 
@@ -47,29 +49,27 @@ const createTimeController = async (req, res) => {
 
     res.status(201).send(newTime);
   } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
+    return res.status(400).send({ message: err.message });
   }
 };
 
 /*   UPDATE_BY_ID   */
-const updateTimeController = (req, res) => {
+const updateTimeController = async (req, res) => {
   try {
     const editedTime = req.body;
-    const editedId = Number(req.params.id);
+    const idParam = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(idParam)) {
+      throw new Error('Invalid ID!');
+    }
     ObjEntity.validadeObject(editedTime);
-    ObjEntity.validadeId(editedId);
-    editedTime.time.time_id = editedId;
     const editedEntity = new timesService.TeamEntity(editedTime);
-    editedEntity.validateTeam();
-    const updatedTime = timesService.updateTimeService(editedEntity);
-
+    const updatedTime = await timesService.updateTimeService(
+      idParam,
+      editedEntity,
+    );
     res.send(updatedTime);
   } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
+    return res.status(400).send({ message: err.message });
   }
 };
 
@@ -86,9 +86,7 @@ const deleteTimeController = async (req, res) => {
     }
     res.send({ message: 'Team successfully deleted!', team: deletedTime });
   } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
+    return res.status(400).send({ message: err.message });
   }
 };
 

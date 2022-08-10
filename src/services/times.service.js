@@ -1,18 +1,26 @@
 const TeamEntity = require('../entities/team.entity');
-// const times = require('../mocks/times');
+const ObjEntity = require('../entities/obj.entity');
 const Team = require('../models/team.model');
 
 /*   SERVICES   */
 /*   GET_ALL    */
 const findAllTimesService = async () => {
-  const allTeams = await Team.find();
-  return allTeams;
+  try {
+    const allTeams = await Team.find();
+    return allTeams;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 /*   GET_BY_ID   */
 const findByIdTimeService = async (id) => {
-  const byIdTeam = await Team.findById(id);
-  return byIdTeam;
+  try {
+    const chosenTime = await Team.findById(id);
+    return chosenTime;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 /*   GET_TABELA   */
@@ -28,30 +36,25 @@ const createTimeService = async (newTime) => {
     newTime.updateTeamStats();
     let createdTeam = await Team.create(newTime.getTeam());
     await updateDataBasePositions();
-    createdTeam = await Team.findById(createdTeam._id);
     return createdTeam;
   } catch (err) {
-    return err.message;
+    throw new Error(err.message);
   }
 };
 
 /*   UPDATE_BY_ID   */
-const updateTimeService = (timeEdited) => {
+/* The default value for the new option of findByIdAndUpdate/findOneAndUpdate has changed to false, which means returning the old doc. So you need to explicitly set the option to true to get the new version of the doc, after the update is applied */
+const updateTimeService = async (id, editedTeam) => {
   try {
-    const timeIndex = times.findIndex(
-      (team) => team.time.time_id === timeEdited.id,
-    );
-
-    timeEdited.updateTeamStats();
-    timeIndex !== -1
-      ? (times[timeIndex] = timeEdited.getTeam())
-      : times.push(timeEdited.getTeam());
-
-    TeamEntity.updateTeamsPositions(times);
-
-    return times.find((time) => time.time.time_id === timeEdited.id);
+    editedTeam.updateTeamStats();
+    const updatedTeam = await Team.findByIdAndUpdate(id, editedTeam.getTeam(), {
+      new: true,
+    });
+    ObjEntity.validadeObject(updatedTeam);
+    await updateDataBasePositions();
+    return updatedTeam;
   } catch (err) {
-    return err.message;
+    throw new Error(err.message);
   }
 };
 
@@ -62,7 +65,7 @@ const deleteTimeService = async (id) => {
     await updateDataBasePositions();
     return deletedTeam;
   } catch (err) {
-    return err.message;
+    throw new Error(err.message);
   }
 };
 

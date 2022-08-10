@@ -1,6 +1,6 @@
 class TeamEntity {
   constructor(team) {
-    this.id = team._id;
+    // this.id = team._id;
     this.nome = team.time.nome_popular;
     this.sigla = team.time.sigla;
     this.escudo = team.time.escudo;
@@ -66,7 +66,7 @@ class TeamEntity {
 
   getTeam() {
     return {
-      _id: this.id,
+      // _id: this.id,
       posicao: this._posicao,
       pontos: this.pontos,
       time: {
@@ -92,9 +92,10 @@ class TeamEntity {
     teams.forEach((team) => {
       team.posicao =
         sortedByPoints.findIndex(
-          (s_team) => s_team.time.time_id === team.time.time_id,
+          (s_team) => s_team._id === team._id,
         ) + 1;
     });
+    return teams;
   }
 
   static teamsSortedByPoints(teams) {

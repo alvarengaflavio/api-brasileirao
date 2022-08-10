@@ -16,7 +16,6 @@ const findByIdTimeController = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(idParam)) {
       throw new Error('Invalid ID!');
     }
-    // ObjEntity.validadeId(idParam);
 
     const chosenTime = await timesService.findByIdTimeService(idParam);
     if (!chosenTime) throw new Error('Team not found.');
@@ -30,7 +29,8 @@ const findByIdTimeController = async (req, res) => {
 /*   GET_TABELA   */
 const findAllTimesByPositionController = async (req, res) => {
   try {
-    const timesSortedByPosition = await timesService.findAllTimesByPositionService();
+    const timesSortedByPosition =
+      await timesService.findAllTimesByPositionService();
     res.send(timesSortedByPosition);
   } catch (err) {
     return res.status(400).send(err.message);
@@ -38,14 +38,14 @@ const findAllTimesByPositionController = async (req, res) => {
 };
 
 /*   POST_TIME   */
-const createTimeController = (req, res) => {
+const createTimeController = async (req, res) => {
   try {
     ObjEntity.validadeObject(req.body);
     const time = new timesService.TeamEntity(req.body);
     time.validateTeam();
-    const newTime = timesService.createTimeService(time);
+    const newTime = await timesService.createTimeService(time);
 
-    res.send(newTime);
+    res.status(201).send(newTime);
   } catch (err) {
     return res.status(400).send({
       message: err.message,
@@ -74,14 +74,17 @@ const updateTimeController = (req, res) => {
 };
 
 /*   DELETE_BY_ID   */
-const deleteTimeController = (req, res) => {
+const deleteTimeController = async (req, res) => {
   try {
-    const idParam = Number(req.params.id);
-    ObjEntity.validadeId(idParam);
-
-    const deletedTime = timesService.deleteTimeService(idParam);
-
-    res.send(deletedTime);
+    const idParam = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(idParam)) {
+      throw new Error('Invalid ID!');
+    }
+    const deletedTime = await timesService.deleteTimeService(idParam);
+    if (deletedTime === null || deletedTime === undefined) {
+      throw new Error('ID not found!');
+    }
+    res.send({ message: 'Team successfully deleted!', team: deletedTime });
   } catch (err) {
     return res.status(400).send({
       message: err.message,

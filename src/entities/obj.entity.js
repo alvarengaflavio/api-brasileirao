@@ -3,7 +3,10 @@ class ObjEntity {
 
   static validadeObject(obj) {
     if (obj && Object.keys(obj).length === 0 && Object.getPrototypeOf(obj)) {
-      throw new Error('Empty object resquested');
+      throw new Error('Empty Team Object');
+    }
+    if (obj === null || obj === undefined) {
+      throw new Error('Team Object not found!');
     }
   }
 

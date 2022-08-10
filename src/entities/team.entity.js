@@ -1,6 +1,6 @@
 class TeamEntity {
   constructor(team) {
-    this.id = team.time.time_id;
+    // this.id = team._id;
     this.nome = team.time.nome_popular;
     this.sigla = team.time.sigla;
     this.escudo = team.time.escudo;
@@ -9,7 +9,7 @@ class TeamEntity {
     this.vitorias = +team.vitorias;
     this.empates = +team.empates;
     this.derrotas = +team.derrotas;
-    this._posicao = null;
+    this._posicao = undefined;
   }
 
   validateTeam() {
@@ -66,10 +66,10 @@ class TeamEntity {
 
   getTeam() {
     return {
+      // _id: this.id,
       posicao: this._posicao,
       pontos: this.pontos,
       time: {
-        time_id: this.id,
         nome_popular: this.nome,
         sigla: this.sigla,
         escudo: this.escudo,
@@ -92,9 +92,10 @@ class TeamEntity {
     teams.forEach((team) => {
       team.posicao =
         sortedByPoints.findIndex(
-          (s_team) => s_team.time.time_id === team.time.time_id,
+          (s_team) => s_team._id === team._id,
         ) + 1;
     });
+    return teams;
   }
 
   static teamsSortedByPoints(teams) {
@@ -116,7 +117,6 @@ class TeamEntity {
       previousId = team.time.time_id;
     }
 
-    // console.log(previousId + 1);
     return previousId + 1;
   }
 }

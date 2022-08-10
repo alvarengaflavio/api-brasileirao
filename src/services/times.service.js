@@ -1,74 +1,88 @@
 const TeamEntity = require('../entities/team.entity');
-const times = require('../mocks/times');
+const ObjEntity = require('../entities/obj.entity');
+const Team = require('../models/team.model');
 
 /*   SERVICES   */
 /*   GET_ALL    */
-const findAllTimesService = () => {
-  return times;
+const findAllTimesService = async () => {
+  try {
+    const allTeams = await Team.find();
+    return allTeams;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 /*   GET_BY_ID   */
-const findByIdTimeService = (id) => {
-  return times.find((time) => time.time.time_id === id);
+const findByIdTimeService = async (id) => {
+  try {
+    const chosenTime = await Team.findById(id);
+    return chosenTime;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 /*   GET_TABELA   */
-const findAllTimesByPositionService = () => {
-  return TeamEntity.teamsSortedByPoints(times);
+const findAllTimesByPositionService = async () => {
+  const allTeams = await Team.find();
+  const allTeamsTable = TeamEntity.teamsSortedByPoints(allTeams);
+  return allTeamsTable;
 };
 
 /*   POST_TIME   */
-const createTimeService = (newTime) => {
+const createTimeService = async (newTime) => {
   try {
-    newTime.id = TeamEntity.findFreeId(times);
     newTime.updateTeamStats();
-    times.push(newTime.getTeam());
-    TeamEntity.updateTeamsPositions(times);
-    newTime.posicao = times[times.length - 1].posicao;
-
-    return newTime.getTeam();
+    let createdTeam = await Team.create(newTime.getTeam());
+    await updateDataBasePositions();
+    return createdTeam;
   } catch (err) {
-    return err.message;
+    throw new Error(err.message);
   }
 };
 
 /*   UPDATE_BY_ID   */
-const updateTimeService = (timeEdited) => {
+/* The default value for the new option of findByIdAndUpdate/findOneAndUpdate has changed to false, which means returning the old doc. So you need to explicitly set the option to true to get the new version of the doc, after the update is applied */
+const updateTimeService = async (id, editedTeam) => {
   try {
-    const timeIndex = times.findIndex(
-      (team) => team.time.time_id === timeEdited.id,
-    );
-
-    timeEdited.updateTeamStats();
-    timeIndex !== -1
-      ? (times[timeIndex] = timeEdited.getTeam())
-      : times.push(timeEdited.getTeam());
-
-    TeamEntity.updateTeamsPositions(times);
-
-    return times.find((time) => time.time.time_id === timeEdited.id);
+    editedTeam.updateTeamStats();
+    const updatedTeam = await Team.findByIdAndUpdate(id, editedTeam.getTeam(), {
+      new: true,
+    });
+    ObjEntity.validadeObject(updatedTeam);
+    await updateDataBasePositions();
+    return updatedTeam;
   } catch (err) {
-    return err.message;
+    throw new Error(err.message);
   }
 };
 
 /*   DELETE_BY_ID   */
-const deleteTimeService = (id) => {
+const deleteTimeService = async (id) => {
   try {
-    const timeIndex = times.findIndex((team) => team.time.time_id === id);
-
-    if (timeIndex === -1) throw new Error('ID not found.');
-
-    const deletedTeam = times.splice(timeIndex, 1);
-    TeamEntity.updateTeamsPositions(times);
-
+    const deletedTeam = await Team.findByIdAndDelete(id);
+    await updateDataBasePositions();
     return deletedTeam;
   } catch (err) {
-    return err.message;
+    throw new Error(err.message);
   }
 };
 
 /*   END OF SERVICES   */
+const updateDataBasePositions = async () => {
+  const sortedTeams = TeamEntity.updateTeamsPositions(await Team.find());
+  for (const team of sortedTeams) {
+    await Team.findByIdAndUpdate(team._id.valueOf(), { posicao: team.posicao });
+  }
+};
+
+const findTeamByName = async (teamParam) => {
+  const teamFound = await Team.findOne({
+    'time.nome_popular': teamParam.nome,
+  });
+  return teamFound;
+};
 
 // EXPORTS
 module.exports = {

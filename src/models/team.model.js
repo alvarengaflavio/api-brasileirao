@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const TeamSchema = new mongoose.Schema({
-  posicao: { type: Number, required: false, default: null },
+  posicao: { type: Number, required: false, default: undefined },
   pontos: { type: Number, required: false },
   time: {
     nome_popular: { type: String, required: true, minLength: 4, maxLength: 15 },

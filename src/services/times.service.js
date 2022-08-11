@@ -17,6 +17,7 @@ const findAllTimesService = async () => {
 const findByIdTimeService = async (id) => {
   try {
     const chosenTime = await Team.findById(id);
+    ObjEntity.validadeObject(chosenTime);
     return chosenTime;
   } catch (err) {
     throw new Error(err.message);
@@ -62,6 +63,7 @@ const updateTimeService = async (id, editedTeam) => {
 const deleteTimeService = async (id) => {
   try {
     const deletedTeam = await Team.findByIdAndDelete(id);
+    ObjEntity.validadeObject(deletedTeam);
     await updateDataBasePositions();
     return deletedTeam;
   } catch (err) {
@@ -92,5 +94,4 @@ module.exports = {
   createTimeService,
   updateTimeService,
   deleteTimeService,
-  TeamEntity,
 };

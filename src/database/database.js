@@ -1,11 +1,10 @@
-const moongose = require('mongoose');
+const { connect } = require('mongoose');
 
 function connectToDatabase() {
-  moongose
-    .connect('mongodb://localhost:27017/teams-db', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+  connect('mongodb://localhost:27017/teams-db', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
     .then(() => {
       console.log('Connected to MONGO-DB');
     })

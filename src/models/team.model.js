@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const {Schema, model} = require('mongoose');
 
-const TeamSchema = new mongoose.Schema({
+const TeamSchema = new Schema({
   posicao: { type: Number, required: false, default: undefined },
   pontos: { type: Number, required: false },
   time: {
@@ -26,6 +26,6 @@ const TeamSchema = new mongoose.Schema({
   ultimos_jogos: { type: Array, required: false, default: [] },
 });
 
-const Team = mongoose.model('teams', TeamSchema);
+const Team = model('teams', TeamSchema);
 
 module.exports = Team;

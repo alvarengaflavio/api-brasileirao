@@ -1,88 +1,74 @@
 const timesService = require('../services/times.service');
-const ObjEntity = require('../entities/obj.entity');
+const TeamEntity = require('../entities/team.entity');
 
 /* CONTROLLERS */
 /*   GET_ALL   */
-const findAllTimesControler = (req, res) => {
-  const allTimes = timesService.findAllTimesService();
-  res.send(allTimes);
+const findAllTimesControler = async (req, res) => {
+  try {
+    const allTimes = await timesService.findAllTimesService();
+    res.send(allTimes);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
 /*   GET_BY_ID   */
-const findByIdTimeController = (req, res) => {
+const findByIdTimeController = async (req, res) => {
   try {
-    const idParam = Number(req.params.id);
-    ObjEntity.validadeId(idParam);
-
-    const chosenTime = timesService.findByIdTimeService(idParam);
-    if (!chosenTime) throw new Error('Team not found.');
-
+    const idParam = req.params.id;
+    const chosenTime = await timesService.findByIdTimeService(idParam);
     res.send(chosenTime);
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({ message: err.message });
   }
 };
 
 /*   GET_TABELA   */
-const findAllTimesByPositionController = (req, res) => {
+const findAllTimesByPositionController = async (req, res) => {
   try {
-    const timesSortedByPosition = timesService.findAllTimesByPositionService();
-
+    const timesSortedByPosition =
+      await timesService.findAllTimesByPositionService();
     res.send(timesSortedByPosition);
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({ message: err.message });
   }
 };
 
 /*   POST_TIME   */
-const createTimeController = (req, res) => {
+const createTimeController = async (req, res) => {
   try {
-    ObjEntity.validadeObject(req.body);
-    const time = new timesService.TeamEntity(req.body);
-    time.validateTeam();
-    const newTime = timesService.createTimeService(time);
-
-    res.send(newTime);
+    const time = new TeamEntity(req.body);
+    const newTime = await timesService.createTimeService(time);
+    res.status(201).send(newTime);
   } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
+    return res.status(400).send({ message: err.message });
   }
 };
 
 /*   UPDATE_BY_ID   */
-const updateTimeController = (req, res) => {
+const updateTimeController = async (req, res) => {
   try {
     const editedTime = req.body;
-    const editedId = Number(req.params.id);
-    ObjEntity.validadeObject(editedTime);
-    ObjEntity.validadeId(editedId);
-    editedTime.time.time_id = editedId;
-    const editedEntity = new timesService.TeamEntity(editedTime);
-    editedEntity.validateTeam();
-    const updatedTime = timesService.updateTimeService(editedEntity);
-
+    const idParam = req.params.id;
+    const editedEntity = new TeamEntity(editedTime);
+    const updatedTime = await timesService.updateTimeService(
+      idParam,
+      editedEntity,
+    );
     res.send(updatedTime);
   } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
+    return res.status(400).send({ message: err.message });
   }
 };
 
 /*   DELETE_BY_ID   */
-const deleteTimeController = (req, res) => {
+const deleteTimeController = async (req, res) => {
   try {
-    const idParam = Number(req.params.id);
-    ObjEntity.validadeId(idParam);
-
-    const deletedTime = timesService.deleteTimeService(idParam);
-
-    res.send(deletedTime);
+    const idParam = req.params.id;
+    const deletedTime = await timesService.deleteTimeService(idParam);
+    res.send({ message: 'Team successfully deleted!', team: deletedTime });
   } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
+    return res.status(400).send({ message: err.message });
   }
 };
 

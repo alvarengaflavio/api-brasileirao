@@ -1,6 +1,6 @@
 class TeamEntity {
   constructor(team) {
-    this.id = team.time.time_id;
+    // this.id = team._id;
     this.nome = team.time.nome_popular;
     this.sigla = team.time.sigla;
     this.escudo = team.time.escudo;
@@ -9,13 +9,10 @@ class TeamEntity {
     this.vitorias = +team.vitorias;
     this.empates = +team.empates;
     this.derrotas = +team.derrotas;
-    this._posicao = null;
+    this._posicao = undefined;
   }
 
   validateTeam() {
-    // if (!this.id) {
-    //   throw new Error('Id inválida');
-    // }
     if (!this.nome || this.nome.length >= 12) {
       throw new Error('Nome de Time inválido.');
     }
@@ -46,6 +43,37 @@ class TeamEntity {
     }
   }
 
+  static validateTeamJson(team) {
+    if (!team.time.nome_popular || team.time.nome_popular.length >= 12) {
+      throw new Error('Nome de Time inválido.');
+    }
+    if (!team.time.sigla || team.time.sigla.length !== 3) {
+      throw new Error('Sigla inválida! A sigal deve conter três caracteres.');
+    }
+    if (!team.time.escudo || team.time.escudo.length > 60) {
+      throw new Error('Escudo inválido.');
+    }
+    if (isNaN(team.gols_pro) && team.gols_pro > 255 && this.gols_pro < 0) {
+      throw new Error('Número de Gols Pro inválido.');
+    }
+    if (
+      isNaN(team.gols_contra) &&
+      team.gols_contra > 255 &&
+      team.gols_contra < 0
+    ) {
+      throw new Error('Número de Gols Contra inválido.');
+    }
+    if (isNaN(team.vitorias) && team.vitorias > 255 && team.vitorias < 0) {
+      throw new Error('Número de vitórias inválido.');
+    }
+    if (isNaN(team.empates) && team.empates > 255 && team.empates < 0) {
+      throw new Error('Número de empates inválido.');
+    }
+    if (isNaN(team.derrotas) && team.derrotas > 255 && team.derrotas < 0) {
+      throw new Error('Número de derrotas inválido.');
+    }
+  }
+
   /**
    * @param {Number} pos
    */
@@ -66,10 +94,10 @@ class TeamEntity {
 
   getTeam() {
     return {
+      // _id: this.id,
       posicao: this._posicao,
       pontos: this.pontos,
       time: {
-        time_id: this.id,
         nome_popular: this.nome,
         sigla: this.sigla,
         escudo: this.escudo,
@@ -91,10 +119,9 @@ class TeamEntity {
     const sortedByPoints = this.teamsSortedByPoints(teams);
     teams.forEach((team) => {
       team.posicao =
-        sortedByPoints.findIndex(
-          (s_team) => s_team.time.time_id === team.time.time_id,
-        ) + 1;
+        sortedByPoints.findIndex((s_team) => s_team._id === team._id) + 1;
     });
+    return teams;
   }
 
   static teamsSortedByPoints(teams) {
@@ -116,7 +143,6 @@ class TeamEntity {
       previousId = team.time.time_id;
     }
 
-    // console.log(previousId + 1);
     return previousId + 1;
   }
 }

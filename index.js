@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const routes = require('./src/routes/times.route');
+const connectToDatabase = require('./src/database/database');
 
 const app = express();
 const port = 3000;
+connectToDatabase();
 
 app.use(express.json());
 app.use(cors());

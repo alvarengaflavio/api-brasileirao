@@ -1,9 +1,14 @@
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../../swagger.json');
 const router = require('express').Router();
 const timesController = require('../controllers/times.controller');
 const {
   validateID,
   validateBodyObject,
 } = require('../middlewares/team.middleware');
+
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 /*    GET_ALL       */
 router.get('/find_times', timesController.findAllTimesControler);

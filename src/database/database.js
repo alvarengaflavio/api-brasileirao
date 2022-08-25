@@ -1,7 +1,7 @@
 const { connect } = require('mongoose');
 
 function connectToDatabase() {
-  connect('mongodb://localhost:27017/teams-db', {
+  connect(process.env.mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

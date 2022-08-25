@@ -106,4 +106,4 @@ dist
 # My ignores
 teste/
 .vscode/extensions.json
-
+.test

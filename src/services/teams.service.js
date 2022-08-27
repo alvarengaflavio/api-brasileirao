@@ -1,5 +1,6 @@
 const { TeamEntity } = require('../entities/team.entity');
-const { ObjEntity } = require('../entities/obj.entity');
+const { TableEntity } = require('../entities/table.entity');
+const { Table } = require('../models/table.model');
 const Team = require('../models/team.model');
 
 /*   SERVICES   */
@@ -18,7 +19,8 @@ const findTeamByIdService = async (id) => {
 /*   POST_TIME   */
 const createTeamService = async (newTime) => {
   try {
-    let createdTeam = await Team.create(newTime);
+    const createdTeam = await Team.create(newTime);
+    createTableWithTeam(createdTeam);
     return createdTeam;
   } catch (err) {
     throw new Error(err.message);
@@ -42,6 +44,18 @@ const deleteTeamService = async (id) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /*   SERVICES Intern Functions    */
+const createTableWithTeam = async (team) => {
+  const duplicateTeam = await Table.findOne({ time: team._id });
+  console.log(duplicateTeam);
+  if (!duplicateTeam) {
+    const newTable = TableEntity.getNewTable(team.id);
+    const teamTable = await Table.create(newTable);
+    if (teamTable) console.log('Team Table created');
+    return;
+  }
+  console.log('Team already in table');
+};
+
 const updateDataBasePositions = async () => {
   const sortedTeams = TeamEntity.updateTeamsPositions(await Team.find());
   for (const team of sortedTeams) {

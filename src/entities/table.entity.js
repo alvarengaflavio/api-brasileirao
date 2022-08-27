@@ -69,7 +69,25 @@ class TableEntity {
   }
 
   static teamsSortedById(teams) {
-    return teams.slice().sort((a, b) => a.time.time_id - b.time.time_id);
+    return teams.slice().sort((a, b) => a.time_id - b.time_id);
+  }
+
+  static getNewTable(teamId) {
+    return {
+      posicao: undefined,
+      pontos: 0,
+      time: teamId,
+      jogos: 0,
+      vitorias: 0,
+      empates: 0,
+      derrotas: 0,
+      gols_pro: 0,
+      gols_contra: 0,
+      saldo_gols: 0,
+      aproveitamento: 0,
+      variacao_posicao: 0,
+      ultimos_jogos: [],
+    };
   }
 
   getTeamTable() {

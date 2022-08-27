@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { connectToDatabase } = require('./src/database/database');
 const teamRouter = require('./src/routes/team.route');
-// const tableRouter = require('./src/routes/table.route');
+const tableRouter = require('./src/routes/table.route');
 // const swaggerRouter = require('./src/routes/swagger.route');
 
 const app = express();
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/teams', teamRouter);
-// app.use('/table', tableRouter);
+app.use('/tables', tableRouter);
 // app.use('/api-docs', swaggerRouter);
 
 app.listen(port.port, () => {

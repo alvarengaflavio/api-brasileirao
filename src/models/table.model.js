@@ -15,6 +15,7 @@ const TableSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Team',
     required: true,
+    unique: true,
   },
   jogos: {
     type: Number,
@@ -68,6 +69,6 @@ const TableSchema = new Schema({
   },
 });
 
-const Table = model('tables', TableSchema);
+const Table = model('Table', TableSchema);
 
 module.exports = { Table };

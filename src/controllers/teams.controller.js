@@ -20,6 +20,7 @@ const findTeamByIdController = async (req, res) => {
   try {
     const idParam = req.params.id;
     const chosenTime = await teamsService.findTeamByIdService(idParam);
+    if (!chosenTime) throw { name: 'NotFoundError', message: 'Team not found' };
     res.send(chosenTime);
   } catch (err) {
     ErrorHandler.handleError(err, req, res);

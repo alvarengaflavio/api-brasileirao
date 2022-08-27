@@ -11,12 +11,8 @@ const findAllTeamsService = async () => {
 
 /*   GET_BY_ID   */
 const findTeamByIdService = async (id) => {
-  try {
-    const chosenTime = await Team.findById(id);
-    return chosenTime;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  const chosenTime = await Team.findById(id);
+  return chosenTime;
 };
 
 /*   POST_TIME   */

@@ -68,6 +68,6 @@ const TableSchema = new Schema({
   },
 });
 
-const Table = model('table', TableSchema);
+const Table = model('tables', TableSchema);
 
 module.exports = { Table };

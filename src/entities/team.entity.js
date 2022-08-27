@@ -1,12 +1,12 @@
 class TeamEntity {
   constructor(team) {
-    this.nome = team.time.nome_popular;
-    this.sigla = team.time.sigla;
-    this.escudo = team.time.escudo;
+    this.nome = team.nome_popular;
+    this.sigla = team.sigla;
+    this.escudo = team.escudo;
   }
 
-  validateTeamTable() {
-    if (!this.nome || this.nome.length >= 12)
+  validateTeam() {
+    if (!this.nome || this.nome.length >= 20)
       throw { name: 'ValidationError', message: 'Nome de Time inválido' };
 
     if (!this.sigla || this.sigla.length !== 3)
@@ -14,8 +14,7 @@ class TeamEntity {
         name: 'ValidationError',
         message: 'Sigla de Time inválida! A sigal deve conter três caracteres.',
       };
-
-    if (!this.escudo || this.sigla.length > 50)
+    if (!this.escudo || this.sigla.length > 250)
       throw { name: 'ValidationError', message: 'Escudo de Time inválido' };
   }
 

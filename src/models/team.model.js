@@ -23,6 +23,6 @@ const TeamSchema = new Schema({
   },
 });
 
-const Team = model('team', TeamSchema);
+const Team = model('teams', TeamSchema);
 
 module.exports = Team;

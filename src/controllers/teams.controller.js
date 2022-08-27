@@ -42,16 +42,15 @@ const createTeamController = async (req, res) => {
 /*   UPDATE_BY_ID   */
 const updateTeamController = async (req, res) => {
   try {
-    const editedTime = req.body;
-    const idParam = req.params.id;
-    const editedEntity = new TeamEntity(editedTime);
     const updatedTime = await teamsService.updateTeamService(
-      idParam,
-      editedEntity,
+      req.params.id,
+      req.body,
     );
+    if (!updatedTime)
+      throw { name: 'NotFoundError', message: 'Team not found' };
     res.send(updatedTime);
   } catch (err) {
-    return res.status(400).send({ message: err.message });
+    ErrorHandler.handleError(err, req, res);
   }
 };
 

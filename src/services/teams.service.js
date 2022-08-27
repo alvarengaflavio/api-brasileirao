@@ -26,18 +26,12 @@ const createTeamService = async (newTime) => {
 };
 
 /*   UPDATE_BY_ID   */
-/* The default value for the new option of findByIdAndUpdate/findOneAndUpdate has changed to false, which means returning the old doc. So you need to explicitly set the option to true to get the new version of the doc, after the update is applied */
+/* The default value of findByIdAndUpdate/findOneAndUpdate has changed to returning the old doc. So you need to explicitly set the option to true to get the new version of the doc, after the update is applied */
 const updateTeamService = async (id, editedTeam) => {
-  try {
-    editedTeam.updateTeamStats();
-    const updatedTeam = await Team.findByIdAndUpdate(id, editedTeam.getTeam(), {
-      new: true,
-    });
-    await updateDataBasePositions();
-    return updatedTeam;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  const updatedTeam = await Team.findByIdAndUpdate(id, editedTeam, {
+    new: true,
+  });
+  return updatedTeam;
 };
 
 /*   DELETE_BY_ID   */

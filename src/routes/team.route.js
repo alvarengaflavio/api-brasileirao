@@ -16,7 +16,7 @@ router.post('/create', validadeTeamBody, teamsController.createTeamController);
 /*    UPDATE_BY_ID  */
 router.put(
   '/update/:id',
-  validateBodyObject,
+  validadeTeamBody,
   validateID,
   teamsController.updateTeamController,
 );

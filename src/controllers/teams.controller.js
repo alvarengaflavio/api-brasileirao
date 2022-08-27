@@ -57,11 +57,12 @@ const updateTeamController = async (req, res) => {
 /*   DELETE_BY_ID   */
 const deleteTeamController = async (req, res) => {
   try {
-    const idParam = req.params.id;
-    const deletedTime = await teamsService.deleteTeamService(idParam);
+    const deletedTime = await teamsService.deleteTeamService(req.params.id);
+    if (!deletedTime)
+      throw { name: 'NotFoundError', message: 'Team not found' };
     res.send({ message: 'Team successfully deleted!', team: deletedTime });
   } catch (err) {
-    return res.status(400).send({ message: err.message });
+    ErrorHandler.handleError(err, req, res);
   }
 };
 

@@ -36,13 +36,8 @@ const updateTeamService = async (id, editedTeam) => {
 
 /*   DELETE_BY_ID   */
 const deleteTeamService = async (id) => {
-  try {
-    const deletedTeam = await Team.findByIdAndDelete(id);
-    await updateDataBasePositions();
-    return deletedTeam;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  const deletedTeam = await Team.findByIdAndDelete(id);
+  return deletedTeam;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////

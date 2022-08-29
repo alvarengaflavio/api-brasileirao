@@ -1,11 +1,10 @@
 class RoundEntity {
   constructor(round) {
-    this.id = round.id;
+    this.tournamentId = round.tournamentId;
     this.number = round.number;
     this.initialDate = this.getDate(round.initialDate); // dd/mm/yyyy
     this.finalDate = this.getDate(round.finalDate); // dd/mm/yyyy
     this.status = undefined;
-    this.tournamentId = round.tournamentId;
     this.matches = [];
     this.setStatus();
   }
@@ -80,12 +79,11 @@ class RoundEntity {
   getRound() {
     this.setStatus();
     return {
-      id: this.id,
+      tournamentId: this.tournamentId,
       number: this.number,
       initialDate: this.initialDate.toDateString(),
       finalDate: this.finalDate.toDateString(),
       status: this.status,
-      tournamentId: this.tournamentId,
       matches: this.matches,
     };
   }

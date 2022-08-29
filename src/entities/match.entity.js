@@ -2,7 +2,7 @@ class MatchEntity {
   constructor(game) {
     this.home = game.mandante;
     this.away = game.visitante;
-    this.date = this.getDate(game.data);
+    this.date = this.getDate(game.data); // dd/mm/yyyy
     this.hour = game.hora;
     this.stadium = game.estadio;
     this.home_score = +game.gols_mandante;

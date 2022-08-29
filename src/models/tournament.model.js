@@ -4,6 +4,7 @@ const TournamentSchema = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   format: {
     type: String,

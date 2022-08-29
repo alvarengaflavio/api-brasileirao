@@ -1,9 +1,9 @@
 class RoundEntity {
   constructor(round) {
-    this.tournamentId = round.tournamentId;
+    this.tournament = round.tournament;
     this.number = round.number;
-    this.initialDate = this.getDate(round.initialDate); // dd/mm/yyyy
-    this.finalDate = this.getDate(round.finalDate); // dd/mm/yyyy
+    this.startDate = this.getDate(round.startDate); // dd/mm/yyyy
+    this.endDate = this.getDate(round.endDate); // dd/mm/yyyy
     this.status = undefined;
     this.matches = [];
     this.setStatus();
@@ -17,9 +17,9 @@ class RoundEntity {
       this.number > 38
     )
       throw { name: 'ValidationError', message: 'Número da rodada inválido' };
-    if (!this.initialDate)
+    if (!this.startDate)
       throw { name: 'ValidationError', message: 'Data inválida' };
-    if (!this.finalDate)
+    if (!this.endDate)
       throw { name: 'ValidationError', message: 'Data inválida' };
     if (!this.status)
       throw { name: 'ValidationError', message: 'Status inválido' };
@@ -40,8 +40,8 @@ class RoundEntity {
 
   setStatus() {
     const date = new Date();
-    if (date < this.initialDate) this.status = 'Pendente';
-    if (date > this.finalDate) this.status = 'Finalizado';
+    if (date < this.startDate) this.status = 'Pendente';
+    if (date > this.endDate) this.status = 'Finalizado';
     this.status = 'Em andamento';
   }
 
@@ -79,10 +79,10 @@ class RoundEntity {
   getRound() {
     this.setStatus();
     return {
-      tournamentId: this.tournamentId,
+      tournament: this.tournament,
       number: this.number,
-      initialDate: this.initialDate.toDateString(),
-      finalDate: this.finalDate.toDateString(),
+      initialDate: this.startDate.toDateString(),
+      finalDate: this.endDate.toDateString(),
       status: this.status,
       matches: this.matches,
     };

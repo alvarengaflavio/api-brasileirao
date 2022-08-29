@@ -1,5 +1,7 @@
 const { TableEntity } = require('../entities/table.entity');
 const { Table } = require('../models/table.model');
+const { TournamentEntity } = require('../entities/tournament.entity');
+const { Tournament } = require('../models/tournament.model');
 
 /*   GET_TABELA   */
 const findAllTeamsByPositionService = async () => {
@@ -17,6 +19,13 @@ const createTableByIdService = async (team) => {
   return teamTable;
 };
 
+const createTournamentService = async (tournament) => {
+  const objTournament = new TournamentEntity(tournament);
+  objTournament.validate();
+  const newTournament = await Tournament.create(objTournament);
+  return newTournament;
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 /*   SERVICES Intern Functions    */
 const updateDataBasePositions = async () => {
@@ -31,4 +40,5 @@ const updateDataBasePositions = async () => {
 module.exports = {
   findAllTeamsByPositionService,
   createTableByIdService,
+  createTournamentService,
 };

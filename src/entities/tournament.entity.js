@@ -1,8 +1,8 @@
-class Tournament {
+class TournamentEntity {
   constructor(tournament) {
     this.name = tournament.name;
     this.format = tournament.format;
-    this.logo = tournament.image;
+    this.logo = tournament.logo;
     this.description = tournament.description;
     this.startDate = this.getDate(tournament.startDate);
     this.endDate = this.getDate(tournament.endDate);
@@ -21,7 +21,7 @@ class Tournament {
         message:
           'Formato do torneio inválido! Formato aceito: Liga, Copa, Campeonato',
       };
-    if (!this.logo || this.logo.length >= 250)
+    if (!this.logo || this.logo.length > 250)
       throw { name: 'ValidationError', message: 'Logo do torneio inválido' };
     if (!this.description || this.description.length >= 250)
       throw {
@@ -89,3 +89,5 @@ class Tournament {
     };
   }
 }
+
+module.exports = { TournamentEntity };

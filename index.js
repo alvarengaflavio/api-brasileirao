@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/teams', teamRouter);
-app.use('/tables', tableRouter);
+app.use('/leagues', tableRouter);
 // app.use('/api-docs', swaggerRouter);
 
 app.listen(port.port, () => {

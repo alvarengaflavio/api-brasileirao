@@ -3,6 +3,7 @@ class TeamEntity {
     this.nome = team.nome_popular;
     this.sigla = team.sigla;
     this.escudo = team.escudo;
+    this.estadio = team.estadio;
   }
 
   validateTeam() {

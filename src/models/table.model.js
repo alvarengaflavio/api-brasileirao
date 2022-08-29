@@ -1,6 +1,10 @@
 const { Schema, model } = require('mongoose');
 
 const TableSchema = new Schema({
+  liga: {
+    type: String,
+    required: true,
+  },
   posicao: {
     type: Number,
     default: undefined,

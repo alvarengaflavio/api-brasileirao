@@ -3,6 +3,7 @@ const { ObjectId } = require('mongoose').Types;
 class TableEntity {
   constructor(team) {
     this.team = team.id;
+    this.league = team.liga;
     this.gols_pro = +team.gols_pro;
     this.gols_contra = +team.gols_contra;
     this.vitorias = +team.vitorias;
@@ -13,9 +14,12 @@ class TableEntity {
     this.ultimos_jogos = this.ultimos_jogos || [];
   }
 
-  validade() {
+  validate() {
     if (!ObjectId.isValid(this.team))
       throw { name: 'ValidationError', message: 'ID de Time inválido' };
+
+    if (!this.validLeague(this.league))
+      throw { name: 'ValidationError', message: 'Liga inválida' };
 
     if (isNaN(this.gols_pro) && this.gols_pro > 255 && this.gols_pro < 0)
       throw { name: 'ValidationError', message: 'Gols pro inválido' };
@@ -42,6 +46,15 @@ class TableEntity {
    */
   set posicao(pos) {
     this._posicao = pos;
+  }
+
+  static validLeague(league) {
+    if (!league) return false;
+    return (
+      league === 'Sem divisão' ||
+      league === 'Divisão 1' ||
+      league === 'Divisão 2'
+    );
   }
 
   updateTeamStats() {
@@ -75,6 +88,7 @@ class TableEntity {
   static getNewTable(teamId) {
     return {
       posicao: undefined,
+      liga: 'Sem divisão',
       pontos: 0,
       time: teamId,
       jogos: 0,
@@ -93,6 +107,7 @@ class TableEntity {
   getTeamTable() {
     return {
       posicao: this._posicao,
+      liga: this.league ?? 'Sem divisão',
       pontos: this.pontos,
       time: this.team,
       jogos: this.jogos,

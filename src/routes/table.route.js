@@ -7,10 +7,13 @@ const {
 } = require('../middlewares/table.middleware');
 
 /*    GET_TABELA    */
-router.get('/find', tableController.findAllTeamsByPositionController);
+router.get(
+  '/table/brasileirao',
+  tableController.findAllTeamsByPositionController,
+);
 /*    CREATE_TABELA    */
 router.post(
-  '/create',
+  '/table/create',
   validateBodyId,
   tableController.createTableByIdController,
 );

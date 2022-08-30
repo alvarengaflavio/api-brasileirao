@@ -1,18 +1,30 @@
 const express = require('express');
 const cors = require('cors');
-const routes = require('./src/routes/times.route');
-const connectToDatabase = require('./src/database/database');
+const { connectToDatabase } = require('./src/database/database');
+const teamRouter = require('./src/routes/team.route');
+const tournamentRouter = require('./src/routes/tournament.route');
+// const swaggerRouter = require('./src/routes/swagger.route');
 
 const app = express();
-const port = 3000;
+const port = {};
+
+process.env.NODE_ENV !== 'production'
+  ? (require('dotenv').config(),
+    (port.port = process.env.devPORT),
+    (port.url = process.env.devURL))
+  : ((port.port = process.env.PORT), (port.url = port.port));
+
 connectToDatabase();
 
 app.use(express.json());
 app.use(cors());
-app.use('/brasileirao', routes);
 
-app.listen(port, () => {
-  console.log(`Server listening on http://localhost:${port}`);
+app.use('/teams', teamRouter);
+app.use('/tournament', tournamentRouter);
+// app.use('/api-docs', swaggerRouter);
+
+app.listen(port.port, () => {
+  console.log(`Server listening on ${port.url + String(port.port)}`);
 });
 
 /* npm run dev */

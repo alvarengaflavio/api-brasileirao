@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Paleta Hipster",
+    "description": "API for CRUD operations on Paleta Hipster",
+    "termsOfService": "",
+    "contact": {
+      "name": "Flavio Alvarenga",
+      "url": "https://github.com/alvalenda",
+      "email": "flavio.alva@outlook.com"
+    },
+    "license": {
+      "name": "",
+      "url": ""
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api-paletahipster.herokuapp.com/paletas",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3000/paletas",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/find-all": {
+      "get": {
+        "tags": [["Paleta", "Paletas"]],
+        "summary": "List containing all paletas",
+        "description": "Rout responsible for listing all paletas",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Paleta"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/paleta-id/{id}": {
+      "get": {
+        "tags": [["Paleta"]],
+        "summary": "Find paleta by id",
+        "description": "Rout responsible for finding paleta by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of paleta to be found",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Paleta"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/create": {
+      "post": {
+        "tags": [["Paleta"]],
+        "summary": "Create a paleta",
+        "description": "Rout responsible for creating paleta",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Paleta"
+              }
+            }
+          },
+          "required": true
+        },
+        "examples": {
+          "application/json": {
+            "summary": "Example of paleta",
+            "value": {
+              "sabor": "Paleta 1",
+              "descricao": "Paleta 1 description",
+              "foto": "./assets/images/paleta1.jpg",
+              "preco": 10.0
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Paleta"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/update/{id}": {
+      "put": {
+        "tags": [["Paleta"]],
+        "summary": "Update a paleta by id",
+        "description": "Rout responsible for updating paleta",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of paleta to be updated",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Paleta"
+              }
+            }
+          },
+          "required": true
+        },
+        "examples": {
+          "application/json": {
+            "summary": "Example of paleta",
+            "value": {
+              "sabor": "Paleta 1 edited",
+              "descricao": "Paleta 1 description edited",
+              "foto": "./assets/images/paleta1.jpg",
+              "preco": 7.0
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Paleta"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/delete/{id}": {
+      "delete": {
+        "tags": [["Paleta"]],
+        "summary": "Delete a paleta by id",
+        "description": "Rout responsible for deleting paleta",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of paleta to be deleted",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Paleta"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Paleta": {
+        "type": "object",
+        "properties": {
+          "sabor": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

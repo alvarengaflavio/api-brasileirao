@@ -37,7 +37,7 @@ const deleteTeamService = async (id) => {
   // must delete table before deleting team
   const deletedTable = await Table.findOneAndDelete({ time: id });
   const deletedTeam = await Team.findByIdAndDelete(id);
-  console.log(deletedTable);
+  // console.log(deletedTable);
   return deletedTeam;
 };
 

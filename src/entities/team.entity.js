@@ -60,6 +60,7 @@ class TeamEntity {
       nome_popular: this.nome,
       sigla: this.sigla,
       escudo: this.escudo,
+      ratings: this.ratings,
     };
   }
 }

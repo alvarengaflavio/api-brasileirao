@@ -18,13 +18,9 @@ const findTeamByIdService = async (id) => {
 
 /*   POST_TIME   */
 const createTeamService = async (newTime) => {
-  try {
-    const createdTeam = await Team.create(newTime);
-    createTableWithTeam(createdTeam);
-    return createdTeam;
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  const createdTeam = await Team.create(newTime);
+  createTableWithTeam(createdTeam);
+  return createdTeam;
 };
 
 /*   UPDATE_BY_ID   */
@@ -38,7 +34,10 @@ const updateTeamService = async (id, editedTeam) => {
 
 /*   DELETE_BY_ID   */
 const deleteTeamService = async (id) => {
+  // must delete table before deleting team
+  const deletedTable = await Table.findOneAndDelete({ time: id });
   const deletedTeam = await Team.findByIdAndDelete(id);
+  console.log(deletedTable);
   return deletedTeam;
 };
 
@@ -46,14 +45,14 @@ const deleteTeamService = async (id) => {
 /*   SERVICES Intern Functions    */
 const createTableWithTeam = async (team) => {
   const duplicateTeam = await Table.findOne({ time: team._id });
-  console.log(duplicateTeam);
+  // console.log(duplicateTeam);
   if (!duplicateTeam) {
     const newTable = TableEntity.getNewTable(team.id);
     const teamTable = await Table.create(newTable);
     if (teamTable) console.log('Team Table created');
     return;
   }
-  console.log('Team already in table');
+  console.log('Warning! Team already has a table.');
 };
 
 const updateDataBasePositions = async () => {

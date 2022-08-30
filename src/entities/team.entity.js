@@ -4,6 +4,11 @@ class TeamEntity {
     this.sigla = team.sigla;
     this.escudo = team.escudo;
     this.estadio = team.estadio;
+    this.ratings = {
+      spi: team.ratings.spi ?? 0,
+      off: team.ratings.off ?? 0,
+      def: team.ratings.off ?? 0,
+    };
   }
 
   validateTeam() {
@@ -17,6 +22,37 @@ class TeamEntity {
       };
     if (!this.escudo || this.sigla.length > 250)
       throw { name: 'ValidationError', message: 'Escudo de Time inválido' };
+    this.validateRatings();
+  }
+
+  validateRatings() {
+    if (
+      isNaN(this.ratings.spi) ||
+      this.ratings.spi < 0 ||
+      this.ratings.spi > 100
+    )
+      throw {
+        name: 'ValidationError',
+        message: 'Rating de Spi inválido! Deve estar entre 0 e 100.',
+      };
+    if (
+      isNaN(this.ratings.off) ||
+      this.ratings.off < 0 ||
+      this.ratings.off > 10
+    )
+      throw {
+        name: 'ValidationError',
+        message: 'Rating de Off inválido! Deve estar entre 0 e 10.',
+      };
+    if (
+      isNaN(this.ratings.def) ||
+      this.ratings.def < 0 ||
+      this.ratings.def > 10
+    )
+      throw {
+        name: 'ValidationError',
+        message: 'Rating de Def inválido! Deve estar entre 0 e 10.',
+      };
   }
 
   getTeam() {
@@ -28,4 +64,5 @@ class TeamEntity {
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////
 module.exports = { TeamEntity };

@@ -4,7 +4,7 @@ const TeamSchema = new Schema({
   nome_popular: {
     type: String,
     minLength: 3,
-    maxLength: 16,
+    maxLength: 25,
     required: true,
     unique: true,
   },
@@ -20,6 +20,26 @@ const TeamSchema = new Schema({
     type: String,
     maxLength: 250,
     required: true,
+  },
+  ratings: {
+    spi: {
+      type: Number,
+      min: 0,
+      max: 100,
+      required: true,
+    },
+    off: {
+      type: Number,
+      min: 0,
+      max: 10,
+      required: true,
+    },
+    def: {
+      type: Number,
+      min: 0,
+      max: 10,
+      required: true,
+    },
   },
 });
 

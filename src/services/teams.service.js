@@ -1,7 +1,7 @@
 const { TeamEntity } = require('../entities/team.entity');
 const { TableEntity } = require('../entities/table.entity');
 const { Table } = require('../models/table.model');
-const Team = require('../models/team.model');
+const { Team } = require('../models/team.model');
 
 /*   SERVICES   */
 /*   GET_ALL    */

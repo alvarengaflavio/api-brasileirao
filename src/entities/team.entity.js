@@ -7,7 +7,7 @@ class TeamEntity {
     this.ratings = {
       spi: team.ratings.spi ?? 0,
       off: team.ratings.off ?? 0,
-      def: team.ratings.off ?? 0,
+      def: team.ratings.def ?? 0,
     };
   }
 

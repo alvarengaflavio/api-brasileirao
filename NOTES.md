@@ -7,6 +7,7 @@
   - [x] Entidade Torneio
   - [x] Entidade Rodada
   - [x] Entidade Jogo
+  - [ ] Entidasde Usuário
 
 - [x] Models
 

@@ -4,9 +4,9 @@ class TournamentEntity {
     this.format = tournament.format;
     this.logo = tournament.logo;
     this.description = tournament.description;
+    this.status = undefined;
     this.startDate = this.getDate(tournament.startDate);
     this.endDate = this.getDate(tournament.endDate);
-    this.status = undefined;
     this.createdAt = tournament.createdAt || new Date();
     this.updatedAt = new Date();
     this.setStatus();

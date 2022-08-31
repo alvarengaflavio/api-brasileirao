@@ -2,9 +2,9 @@ class RoundEntity {
   constructor(round) {
     this.tournament = round.tournament;
     this.number = round.number;
+    this.status = undefined;
     this.startDate = this.getDate(round.startDate); // dd/mm/yyyy
     this.endDate = this.getDate(round.endDate); // dd/mm/yyyy
-    this.status = undefined;
     this.matches = [];
     this.setStatus();
   }

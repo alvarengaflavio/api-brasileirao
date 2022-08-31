@@ -70,7 +70,65 @@
 
 ## Entidades
 
+### Users
 
+- name: `String`,
+- username: `String`,
+- email: `String`,
+- password: `String`,
+- photo: `String`,
+
+### Teams
+
+- name: `String`,
+- shorthand: `String`,
+- badge: `String`,
+- ground: `String`,
+- ratings: {
+  spi: `Number`,
+  off: `Number`,
+  def: `Number`,
+  }
+
+### Tornaments
+
+- name: `String`,
+- format: `String`,
+- logo: `String`,
+- description: `String`,
+- status: `String`,
+- startDate: `Date`,
+- endDate: `Date`,
+- createAt: `Date`,
+- updateAt: `Date`,
+
+### Round
+
+- tournament: `String`,
+- number: `Number`,
+- logo: `String`,
+- status: `String`,
+- startDate: `Date`,
+- endDate: `Date`,
+- matches: [...Match: `Object` ],
+
+### Match
+
+- home: `String`,
+- away: `String`,
+- date: `Date`,
+- hour: `Number`,
+- stadium: `String`,
+- home_score: `String`,
+- away_score: `String`,
+- home_penalties: `String`,
+- away_penalties: `String`,
+- home_yellow_cards: `String`,
+- away_yellow_cards: `String`,
+- home_red_cards: `String`,
+- away_red_cards: `String`,
+
+## Rotas
 
 ---
 
